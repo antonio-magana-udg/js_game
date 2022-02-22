@@ -5,6 +5,9 @@ canvas.width = innerWidth;
 canvas.height = innerHeight;
 
 const scoreElement = document.querySelector("#scoreElement");
+const startGameButton = document.querySelector("#startGameButton");
+const gameMenu = document.querySelector("#gameMenu");
+const bigScoreElement = document.querySelector("#bigScoreElement");
 
 class Player {
   constructor(x, y, radius, color) {
@@ -102,10 +105,20 @@ class Particle {
 const x = canvas.width / 2;
 const y = canvas.height / 2;
 
-const player = new Player(x, y, 20, "white");
-const projectiles = [];
-const enemies = [];
-const particles = [];
+let player = new Player(x, y, 15, "white");
+let projectiles = [];
+let enemies = [];
+let particles = [];
+
+function init() {
+  player = new Player(x, y, 15, "white");
+  projectiles = [];
+  enemies = [];
+  particles = [];
+  score = 0;
+  scoreElement.innerHTML = score;
+  bigScoreElement.innerHTML = score;
+}
 
 function spawnEnemies() {
   setInterval(() => {
@@ -124,10 +137,10 @@ function spawnEnemies() {
 
     const color = `hsl(${Math.random() * 360}, 50%, 50%)`;
     const angle = Math.atan2(canvas.height / 2 - y, canvas.width / 2 - x);
-    const speed = { x: Math.cos(angle), y: Math.sin(angle) };
+    const speed = { x: Math.cos(angle) * 1.4, y: Math.sin(angle) * 1.4 };
 
     enemies.push(new Enemy(x, y, radius, color, speed));
-  }, 1000);
+  }, 800);
 }
 
 let animationId;
@@ -168,6 +181,8 @@ function animate() {
     // End game
     if (distance - enemy.radius - player.radius < 1) {
       cancelAnimationFrame(animationId);
+      gameMenu.style.display = "flex";
+      bigScoreElement.innerHTML = score;
     }
 
     projectiles.forEach((projectile, pIndex) => {
@@ -224,5 +239,9 @@ addEventListener("click", (event) => {
   projectiles.push(new Projectile(x, y, 5, "white", speed));
 });
 
-animate();
-spawnEnemies();
+startGameButton.addEventListener("click", () => {
+  init();
+  animate();
+  spawnEnemies();
+  gameMenu.style.display = "none";
+});

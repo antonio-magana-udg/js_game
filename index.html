@@ -7,8 +7,26 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>JS Game</title>
   </head>
-  <body style="margin: 0;">
-      <div class="fixed text-white ml-2 mt-1 select-none"><span>Score: </span><span id="scoreElement">0</span></div>
+  <body style="margin: 0; background: black">
+    <div class="fixed text-white ml-2 mt-1 select-none">
+      <span>Score: </span><span id="scoreElement">0</span>
+    </div>
+
+    <div class="fixed inset-0 flex items-center justify-center" id="gameMenu">
+      <div class="bg-white max-w-md w-full p-6 text-center">
+        <h1 class="text-4xl font-bold leading-none" id="bigScoreElement">0</h1>
+        <p class="text-sm text-gray-700 mb-4">Points</p>
+        <div>
+          <button
+            class="bg-blue-500 text-white w-full py-3 rounded-full text-sm"
+            id="startGameButton"
+          >
+            Start Game
+          </button>
+        </div>
+      </div>
+    </div>
+
     <canvas></canvas>
     <script
       src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"
